@@ -1,4 +1,4 @@
-### Audio Dropout Detector 
+## Audio Dropout Detector 
 ##### Required README quiestions
 1. What platform/system and Python version you used to run your code:
 
