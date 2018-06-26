@@ -16,7 +16,7 @@ import warnings
 POSITIVE = random.choice([True, False])
 
 # Set a couple different positive and negative cases to be chosen at random at runtime
-AUDIO_FILES = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'test', 'audio'))
+AUDIO_FILES = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test', 'audio'))
 
 NEG_INFILES = ['ThisIsAmerica_negative_1.wav',
                'ThisIsAmerica_negative_2.wav']

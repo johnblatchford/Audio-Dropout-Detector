@@ -1,5 +1,4 @@
 ### Audio Dropout Detector 
-###### John Blatchford - listening@mac.com
 
 ##### Required README quiestions
 1. What platform/system and Python version you used to run your code:
