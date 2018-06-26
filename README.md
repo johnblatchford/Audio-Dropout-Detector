@@ -1,5 +1,21 @@
 ### Audio Dropout Detector 
 ###### John Blatchford - listening@mac.com
+1. what platform/system and Python version you used to run your code:
+
+    Project was created in macOS 10.12.6 / Python 3.6.3 / PyCharmCE 2018.1 / pyenv-virtualenv
+
+2. what packages and dependencies you used:
+
+    package dependencies: numpy, scipy, matplotlib, pytest(for unittests)
+
+    built-in packages used: argparse, os, random, errno, warnings, logging(for debugging)
+
+3.the sequence of how your code needs to be executed:
+
+        $ python audio_dropout_detector.py -i "/path/to/audio/file.wav" -w 256 -t 10
+
+        -w = window = the amount of samples in each analyzer window
+        -t = threshold = the threshold to flag as a possible dropout
 
 #### Basis:
 Audio engineers that produce multi-channel wav files sometimes need a way to quickly verify that the file they have 
