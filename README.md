@@ -1,14 +1,16 @@
 ### Audio Dropout Detector 
 ###### John Blatchford - listening@mac.com
+
+##### Required README quiestions
 1. what platform/system and Python version you used to run your code:
 
-    Project was created in macOS 10.12.6 / Python 3.6.3 / PyCharmCE 2018.1 / pyenv-virtualenv
+    `Project was created in macOS 10.12.6 / Python 3.6.3 / PyCharmCE 2018.1 / pyenv-virtualenv`
 
 2. what packages and dependencies you used:
 
-    package dependencies: numpy, scipy, matplotlib, pytest(for unittests)
+    `package dependencies: numpy, scipy, matplotlib, pytest(for unittests)
 
-    built-in packages used: argparse, os, random, errno, warnings, logging(for debugging)
+    built-in packages used: argparse, os, random, errno, warnings, logging(for debugging)`
 
 3.the sequence of how your code needs to be executed:
 
