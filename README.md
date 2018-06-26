@@ -33,6 +33,9 @@ _This will use a file with no gaps, but very silent passages, the script will re
     $ python audio_dropout_detector.py -i "../test/audio/ThisIsAmerica_negative_2.wav" -w 32 -t 20
 _This will use a different file with no gaps, but similar silent passages, the script will report no dropouts_
 
+    $ python audio_dropout_detector.py -w 64 -t 10
+_Not specifying an input file will cause the script to randomly choose one of the 4 test files (2 positive, 2 negative)
+
 #### Basis:
 Audio engineers that produce multi-channel wav files sometimes need a way to quickly verify that the file they have 
 rendered/processed is valid. Sometimes the engineer has to process the file offline 
