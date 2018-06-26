@@ -19,6 +19,20 @@
         -w = window = the amount of samples in each analyzer window
         -t = threshold = the threshold to flag as a possible dropout
 
+### QuickStart using the included test files:
+    `$ cd Audio-Dropout-Detector`
+    `$ python audio_dropout_detector.py -i "../test/audio/Audio_With_Gap_768.wav" -w 256 -t 10`
+_This will use a file with a known gap of 768 samples, window value of 256 and threshold of 10_
+
+    `$ python audio_dropout_detector.py -i "../test/audio/Audio_With_Gap_20.wav" -w 8 -t 10`
+_This will use a file with a known gap of 20 samples, window value of 8 and threshold of 10_
+
+    `$ python audio_dropout_detector.py -i "../test/audio/ThisIsAmerica_negative_1.wav" -w 64 -t 10`
+_This will use a file with no gaps, but very silent passages, the script will report no dropouts_
+
+    `$ python audio_dropout_detector.py -i "../test/audio/ThisIsAmerica_negative_2.wav" -w 32 -t 20`
+_This will use a different file with no gaps, but similar silent passages, the script will report no dropouts_
+
 #### Basis:
 Audio engineers that produce multi-channel wav files sometimes need a way to quickly verify that the file they have 
 rendered/processed is valid. Sometimes the engineer has to process the file offline 
