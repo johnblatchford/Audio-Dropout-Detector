@@ -2,17 +2,17 @@
 ###### John Blatchford - listening@mac.com
 
 ##### Required README quiestions
-1. what platform/system and Python version you used to run your code:
+1. What platform/system and Python version you used to run your code:
 
     `Project was created in macOS 10.12.6 / Python 3.6.3 / PyCharmCE 2018.1 / pyenv-virtualenv`
 
-2. what packages and dependencies you used:
+2. What packages and dependencies you used:
 
-    `package dependencies: numpy, scipy, matplotlib, pytest(for unittests)
+    `package dependencies: numpy, scipy, matplotlib, pytest(for unittests)`
 
-    built-in packages used: argparse, os, random, errno, warnings, logging(for debugging)`
+    `built-in packages used: argparse, os, random, errno, warnings, logging(for debugging)`
 
-3.the sequence of how your code needs to be executed:
+3. The sequence of how your code needs to be executed:
 
         $ python audio_dropout_detector.py -i "/path/to/audio/file.wav" -w 256 -t 10
 
