@@ -1,7 +1,7 @@
-###Audio Dropout Detector 
+### Audio Dropout Detector 
 ###### John Blatchford - listening@mac.com
 
-####Basis:
+#### Basis:
 Audio engineers that produce multi-channel wav files sometimes need a way to quickly verify that the file they have 
 rendered/processed is valid. Sometimes the engineer has to process the file offline 
 _(meaning they are not monitoring the mix which is the default QA process for audio mixing)_
@@ -9,14 +9,14 @@ _(meaning they are not monitoring the mix which is the default QA process for au
 The most common artifacts encountered are dropouts or glitches. These types of artifacts can be the result of many things.
 I/o buffering problems due to disk speed, hasty region edits with no cross-fade, and plug-in processing issues to name a few.   
 
-####so
+#### so
 
 I would like to have a script that processes and analyzes a wav file on disk by taking a rolling RMS calculation, 
 if it detects a sharp change in amplitude the window could contain potential dropout or glitch.
 
 
 
-####Effort: 
+#### Effort: 
 Create a module (audio_dropout_detector.py) that takes in a wav file and analyzes it for dropouts. 
 It does this by taking a window of samples (_default=64_, _overrideable_), calculating an RMS value 
 (accounting for NaN which is expected for dropouts)
@@ -48,11 +48,11 @@ _(I pad the glitch with 1 second of pre and post roll for context)_
 
     wavfile.write('output/{0}_artifact.wav'.format(filename), 
                    rate=48000, data=stereo_array[sample_start - 48000:sample_end + 48000])
-######Dependencies:
+###### Dependencies:
     - python: 3.6.3
     - numpy, scipy, matplotlib, pylab
 
-####Commandline Usage:
+#### Commandline Usage:
     usage: audio_dropout_detector.py [-h] [-i I] [-t T] [-w W]
                                      [-log {debug,info,warning,error}]
     
@@ -66,7 +66,7 @@ _(I pad the glitch with 1 second of pre and post roll for context)_
       -log {debug,info,warning,error}
                             logging level (defaults to 'warning')
 
-####Module Usage:
+#### Module Usage:
 Import the module:
 
     import audio_dropout_detector
@@ -87,8 +87,8 @@ you can use the 'dropout_start' and 'dropout_end' values for the plot_problem_ar
                                                          (dropout_start - 48000), 
                                                          (dropout_end + 48000)
 _(Note: that supplying a buffer of 48000 samples in either direction allows for 2 full seconds of context around the possible dropout)_
-####Tests:
-######using pytest: 
+#### Tests:
+###### using pytest: 
     
     $ cd audio_dropout_detector/test/
     
@@ -101,7 +101,7 @@ _(Note: that supplying a buffer of 48000 samples in either direction allows for 
                                                                                                     [100%]
     test_audio_dropout_detector.py ....
     
-######Test using traditional positional arguments and test files:
+###### Test using traditional positional arguments and test files:
     
     $ cd audio_dropout_detector/src/
     
@@ -112,7 +112,7 @@ _This will use a file with a known gap of 768 samples, window value of 256 and t
 _This will use a file with a known gap of 20 samples, window value of 8 and threshold of 10_
 
     
-#####NOTES:
+##### NOTES:
 _One thing that caught me up for a bit was a RuntimeError in numpy calculating the RMS value until I figured out how
 to suppress the error:_
                 
@@ -121,7 +121,7 @@ to suppress the error:_
                     rms(chunk)
 
 
-#####TODO:
+##### TODO:
 - Figure out a better method than RMS so the script isn't so dpendent on window size.
 
 - module currently only supports detecting drops in overall loudness (RMS) to look for potential problem areas.  
