@@ -17,7 +17,7 @@
         -w = window = the amount of samples in each analyzer window
         -t = threshold = the threshold to flag as a possible dropout
 
-### QuickStart using the included test files:
+#### QuickStart using the included test files:
     $ cd Audio-Dropout-Detector
     $ python audio_dropout_detector.py -i "../test/audio/Audio_With_Gap_768.wav" -w 256 -t 10
 _This will use a file with a known gap of 768 samples, window value of 256 and threshold of 10_
