@@ -11,6 +11,7 @@ import random
 import errno
 import logging
 import warnings
+import soundfile as sf
 
 # GLOBALS
 POSITIVE = random.choice([True, False])
@@ -67,11 +68,10 @@ def read_wav(infile):
     filename = os.path.basename(infile)
     print('Reading in: {0} ...'.format(filename))
     samplerate, st_array,  = wavfile.read(infile)
-    mono_array = st_array.sum(axis=1) / 2
-    return samplerate, st_array, mono_array, filename
+    return samplerate, st_array, filename
 
 
-def analyzer(a, window=64, threshold=10):
+def analyzer(infile, window=64, threshold=10):
     """
     Does most of the heavy lifting.  Should convert this to a generator
     and do the rms and comparison in a separate function
@@ -80,31 +80,26 @@ def analyzer(a, window=64, threshold=10):
     :param threshold: the threshold to trigger dropout detection
     :return: contains_dropouts, plot_start, plot_end
     """
-    offset = 0
+
     rms_val_list = []  # Keep a running tally for min() and max() calculations
     offending_offsets = []  # collect the offsets where dropouts occur
     contains_dropouts = False  # if swapped to True, triggers the plotting mechanism
+    filename = os.path.basename(infile)
 
     #  Iterate over the file a window size at a time and call rms() to analyze for dropouts
-    for idx, sample in enumerate(a):
-        chunk = a[offset + 1:offset + window]
-        offset = offset + window
-        if not all(np.isfinite(chunk)):
-            logger.debug('... no more chunks')
-            break
-        else:
+    for idx, block in enumerate(sf.blocks(infile, blocksize=window, overlap=int(window / 4))):
             with warnings.catch_warnings():  # will return an odd RuntimeWarning if not used. clutters console output
                 warnings.simplefilter("ignore", category=RuntimeWarning)
-                rms_val = (rms(chunk))
-                logger.debug('Chunk: {0}RMS: {1}'.format(idx, rms_val))
+                rms_val = (rms(block))
+                logger.debug('Sample: {0}, RMS: {0}'.format(idx * window, rms_val))
                 rms_val_list.append(rms_val)
                 if np.isnan(rms_val):  # must account for NaN when we reach an empty array element and try to run rms()
-                    logger.debug('NaN detected at {0}'.format(idx))
+                    logger.debug('NaN detected}')
                     break
                 if rms_val < threshold:  # If the rms(chunk) value is less than the threshold, send to offenders list
-                    offending_offsets.append(offset)
-                    print('possible dropout between samples: {0} - {1}\nrms for chunk {2}: {3}'.format(
-                                                                            offset, offset + window, idx, rms(chunk)))
+                    offending_offsets.append(idx * window)
+                    print('possible dropout at: {0}\nrms for: {1}'.format(
+                                                                            idx * window, rms_val))
                     contains_dropouts = True  # Flip the bool to indicate plotting is needed
     #  Show the min and max for the file for information sake
     print('max rms: {0}\nmin rms: {1}\n'.format(max(rms_val_list), min(rms_val_list)))
@@ -112,11 +107,11 @@ def analyzer(a, window=64, threshold=10):
 
     if not offending_offsets:  # Use arbitrary values to return if no dropouts were encountered
         plot_start = 0
-        plot_end = len(a)
+        plot_end = 0
     else:
         plot_start = min(offending_offsets)
         plot_end = max(offending_offsets)
-    return contains_dropouts, plot_start, plot_end
+    return contains_dropouts, plot_start, plot_end, filename
 
 
 def plot_problem_area(array, filename, start_sample, end_sample):
@@ -131,7 +126,7 @@ def plot_problem_area(array, filename, start_sample, end_sample):
     plb.style.use('ggplot')
     plb.subplot2grid((3, 1), (0, 0), colspan=1, rowspan=2)
     # Only plot the slice of audio the dropouts occur in
-    plb.plot(array[start_sample - 1000:end_sample + 1000], label='channel')
+    plb.plot(array[start_sample - 100:end_sample + 100], label='channel')
     plb.title('Time domain:\n')
     plb.ylabel("Threshold of: {0}dbFS".format(convert_to_dbfs(10)))
     plb.yscale('linear')
@@ -205,12 +200,11 @@ if __name__ == '__main__':
 
     # FUNCTION CALLS
 
-    # Read in the wav file and get the samplerate, numpy array, and filename
-    samplefreq, stereo_array, mon_array, filename = read_wav(input_wav)
-    print('{0} sampling frequency of {1}/sec'.format(filename, samplefreq))
-
     # Now we'll take the converted mono array and anylize it for dropouts
-    contains_dropouts, plot_start, plot_end = analyzer(mon_array, window=input_window_size, threshold=input_threshold)
+    contains_dropouts, plot_start, plot_end, filename = analyzer(input_wav,
+                                                                 window=input_window_size,
+                                                                 threshold=input_threshold)
+    samplerate, stereo_array = wavfile.read(input_wav)
     # If it did contain dropouts, let's plot the problem area for subjective analysis
     if contains_dropouts:
         print('The file contains dropouts: {0}\nplot_area: {1}-{2}'.format(contains_dropouts, plot_start, plot_end))
