@@ -35,7 +35,7 @@ _This will use a different file with no gaps, but similar silent passages, the s
 _Not specifying an input file will cause the script to randomly choose one of the 4 test files (2 positive, 2 negative)
 
 #### Basis:
-Audio engineers that produce multi-channel wav files sometimes need a way to quickly verify that the file they have 
+Audio engineers that mix audio into wav files sometimes need a way to quickly verify that the file they have 
 rendered/processed is valid. Sometimes the engineer has to process the file offline 
 _(meaning they are not monitoring the mix which is the default QA process for audio mixing)_
 
