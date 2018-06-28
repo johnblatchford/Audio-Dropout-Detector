@@ -1,5 +1,5 @@
 ## Audio Dropout Detector 
-##### Required README quiestions
+##### README quiestions
 1. What platform/system and Python version you used to run your code:
 
     `Project was created in macOS 10.12.6 / Python 3.6.3 / PyCharmCE 2018.1 / pyenv-virtualenv`
