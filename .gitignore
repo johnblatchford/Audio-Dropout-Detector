@@ -1,3 +1,4 @@
 src/output/Audio*
 src/output/This*
 .idea/
+.pytest_cache/
