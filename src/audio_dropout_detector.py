@@ -104,7 +104,7 @@ def analyzer(a, window=64, threshold=10):
                 if rms_val < threshold:  # If the rms(chunk) value is less than the threshold, send to offenders list
                     offending_offsets.append(offset)
                     print('possible dropout between samples: {0} - {1}\nrms for chunk {2}: {3}'.format(
-                                                                            offset, offset + window, idx, rms(chunk)))
+                                                                            offset, offset + window, idx, rms_val))
                     contains_dropouts = True  # Flip the bool to indicate plotting is needed
     #  Show the min and max for the file for information sake
     print('max rms: {0}\nmin rms: {1}\n'.format(max(rms_val_list), min(rms_val_list)))
