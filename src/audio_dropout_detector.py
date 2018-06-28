@@ -86,7 +86,7 @@ def analyzer(a, window=64, threshold=10):
     contains_dropouts = False  # if swapped to True, triggers the plotting mechanism
 
     #  Iterate over the file a window size at a time and call rms() to analyze for dropouts
-    for idx, sample in enumerate(a):
+    for idx, sample in enumerate(a / window):
         chunk = a[offset + 1:offset + window]
         offset = offset + window
         if not all(np.isfinite(chunk)):
